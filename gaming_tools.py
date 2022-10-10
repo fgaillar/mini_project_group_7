@@ -2,10 +2,7 @@
 functions should be used to create higher level operations.
 In particular, they should NOT be directly used by players."""
 
-
-import os
-import pickle
-import random
+import os, pickle, random
 
 
 # === game management functions ===
@@ -35,10 +32,10 @@ def _load_game_db():
         game_db = pickle.load(fd)
         fd.close()
     except:
-        game_db =  {'creatures':{},
-                    'characters':{},
-                    'team_money':0,
-                    'nb_defeated':0}
+        game_db = {'creatures': {},
+                   'characters': {},
+                   'team_money': 0,
+                   'nb_defeated': 0}
 
     return game_db
 
@@ -55,7 +52,6 @@ def _dump_game_db(game_db):
     fd = open('game.db', 'wb')
     pickle.dump(game_db, fd)
     fd.close()
-
 
 
 # === team management functions ===
@@ -133,7 +129,6 @@ def get_nb_defeated():
     return game_db['nb_defeated']
 
 
-
 # === character management functions ===
 def character_exists(character):
     """Tells whether a character already exists or not.
@@ -191,7 +186,7 @@ def add_new_character(character, variety, reach, strength, life):
     if life < 0:
         raise ValueError('life cannot be negative (life = %d)' % life)
 
-    game_db['characters'][character] = {'variety':variety, 'reach':reach, 'strength':strength, 'life':life}
+    game_db['characters'][character] = {'variety': variety, 'reach': reach, 'strength': strength, 'life': life}
 
     _dump_game_db(game_db)
 
@@ -245,6 +240,7 @@ def get_character_reach(character):
 
     return game_db['characters'][character]['reach']
 
+
 def set_character_strength(character, strength):
     """Modifies the strength of a character.
 
@@ -267,7 +263,7 @@ def set_character_strength(character, strength):
     if strength < 0:
         raise ValueError('strength cannot be negative (strength = %d)' % strength)
 
-    game_db['characters'][character]['strength']  = strength
+    game_db['characters'][character]['strength'] = strength
 
     _dump_game_db(game_db)
 
@@ -319,7 +315,7 @@ def set_character_life(character, life):
     if life < 0:
         raise ValueError('life cannot be negative (life = %d)' % life)
 
-    game_db['characters'][character]['life']  = life
+    game_db['characters'][character]['life'] = life
 
     _dump_game_db(game_db)
 
@@ -412,7 +408,7 @@ def add_creature(creature, reach, strength, life):
     if life < 0:
         raise ValueError('life cannot be negative (life = %d)' % life)
 
-    game_db['creatures'][creature] = {'reach':reach, 'strength':strength, 'life':life}
+    game_db['creatures'][creature] = {'reach': reach, 'strength': strength, 'life': life}
 
     _dump_game_db(game_db)
 
@@ -512,7 +508,7 @@ def set_creature_strength(creature, strength):
     if strength < 0:
         raise ValueError('strength cannot be negative (strength = %d)' % strength)
 
-    game_db['creatures'][creature]['strength']  = strength
+    game_db['creatures'][creature]['strength'] = strength
 
     _dump_game_db(game_db)
 
@@ -564,7 +560,7 @@ def set_creature_life(creature, life):
     if life < 0:
         raise ValueError('life cannot be negative (life = %d)' % life)
 
-    game_db['creatures'][creature]['life']  = life
+    game_db['creatures'][creature]['life'] = life
 
     _dump_game_db(game_db)
 
@@ -592,72 +588,3 @@ def get_creature_life(creature):
         raise ValueError('creature %s does not exist' % creature)
 
     return game_db['creatures'][creature]['life']
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def restart_game():
-    reset_game()
-def reach_character(variety):
-    """
-    calcul the reach of the variety of the character.
-
-    Parametres:
-    ---------
-    reach: reach of the character (int)
-
-    Raises
-    ------
-    ValueError: if the character does not exist
-
-    """
-    if variety == "elf" or variety == "wizard":
-        reach = 'short'
-    else:
-        reach = 'long'
-    return reach
-def character_life(variety):
-    if variety == "dwarf":
-        life = random.randint(10,50)
-    elif variety == "healer" or 'wizard' or 'necromancer':
-        life = random.randint(5,15)
-    elif variety == "elf":
-        life = random.randint(15,25)
-    return life
-def character_strength(variety):
-        if variety== "dwarf":
-            strength = random.randint(10, 50)
-        elif variety == "healer" or 'wizard' or 'necromancer':
-            strength = random.randint(5, 15)
-        elif variety == "elf":
-            strength = random.randint(15, 25)
-        return strength
-
-def create_new_player(character,variety):
-    character_exists(character)
-    reach = reach_character(variety)
-    life = character_life(variety)
-    strength = character_strength(variety)
-    return character,variety,reach,life,strength
-print(create_new_player("Thibald","dwarf"))
