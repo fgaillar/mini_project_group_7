@@ -3,7 +3,9 @@ functions should be used to create higher level operations.
 In particular, they should NOT be directly used by players."""
 
 
-import os, pickle, random
+import os
+import pickle
+import random
 
 
 # === game management functions ===
@@ -591,7 +593,9 @@ def get_creature_life(creature):
 
     return game_db['creatures'][creature]['life']
 
-def reach(reach):
+def restart_game():
+    reset_game()
+def reach_character(variety):
     """
     calcul the reach of the variety of the character.
 
@@ -604,15 +608,33 @@ def reach(reach):
     ValueError: if the character does not exist
 
     """
-    if variety=="elf"or variety=="wizard"
-        reach= 1
+    if variety == "elf" or variety == "wizard":
+        reach = 'short'
     else:
-        reach=0
+        reach = 'long'
+    return reach
+def character_life(variety):
+    if variety == "dwarf":
+        life = random.randint(10,50)
+    elif variety == "healer" or 'wizard' or 'necromancer':
+        life = random.randint(5,15)
+    elif variety == "elf":
+        life = random.randint(15,25)
+    return life
+def character_strength(variety):
+        if variety == "dwarf":
+            strength = random.randint(10, 50)
+        elif variety == "healer" or 'wizard' or 'necromancer':
+            strength = random.randint(5, 15)
+        elif variety == "elf":
+            strength = random.randint(15, 25)
+        return strength
 
+def create_new_player(character,variety):
+    character_exists(character)
+    reach = reach_character(variety)
+    life = character_life(variety)
+    strength = character_strength(variety)
+    return character,variety,reach,life,strength
 
-
-def restart_game():
-    reset_game()
-def create_new_player():
-    add_new_character()
-
+create_new_player("Greudon",'necromancer')
