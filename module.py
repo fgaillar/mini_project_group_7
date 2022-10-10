@@ -591,7 +591,7 @@ def get_creature_life(creature):
 
     return game_db['creatures'][creature]['life']
 
-def reach(reach):
+def reach(variety):
     """
     calcul the reach of the variety of the character.
 
@@ -604,15 +604,22 @@ def reach(reach):
     ValueError: if the character does not exist
 
     """
-    if variety=="elf"or variety=="wizard"
-        reach= 1
+    reach = ""
+    if variety == "elf" or variety == "wizard":
+        reach = 1
     else:
-        reach=0
+        reach = 0
 
 
-
+def start():
+    _load_game_db()
 def restart_game():
     reset_game()
-def create_new_player():
-    add_new_character()
-
+    start()
+def create_new_player(character,variety):
+    reach = ""
+    life = 0
+    strenght = 0
+    reach(variety)
+    set_character_life(character,)
+    return character, 'is a', variety, 'and have', life, 'health point', 'and', strenght, 'of power'
