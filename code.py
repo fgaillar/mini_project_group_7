@@ -1,4 +1,5 @@
 import gaming_tools as gt
+import random
 def create_player(name, type):
     """Create a character/player
 
@@ -14,15 +15,15 @@ def create_player(name, type):
         print('You can\'t create another player during the game')
     else:
         if type == 'dwarf':
-            gt.add_new_character(name, type, 'short', randint(10, 50), randint(10, 50))
+            gt.add_new_character(name, type, 'short', random.randint(10, 50), random.randint(10, 50))
         elif type == 'elf':
-            gt.add_new_character(name, type, 'long', randint(15, 25), randint(15, 25))
+            gt.add_new_character(name, type, 'long', random.randint(15, 25), random.randint(15, 25))
         elif type == 'healer':
-            gt.add_new_character(name, type, 'short', randint(5, 15), randint(5, 15))
+            gt.add_new_character(name, type, 'short', random.randint(5, 15), random.randint(5, 15))
         elif type == 'necromancer':
-            gt.add_new_character(name, type, 'short', randint(5, 15), randint(5, 15))
+            gt.add_new_character(name, type, 'short', random.randint(5, 15), random.randint(5, 15))
         elif type == 'wizard':
-            gt.add_new_character(name, type, 'long', randint(5, 15), randint(5, 15))
+            gt.add_new_character(name, type, 'long', random.randint(5, 15), random.randint(5, 15))
         else:
             print('Please enter a valid type !')
             correct_type = False
