@@ -3,7 +3,9 @@ functions should be used to create higher level operations.
 In particular, they should NOT be directly used by players."""
 
 
-import os, pickle, random
+import os
+import pickle
+import random
 
 
 # === game management functions ===
