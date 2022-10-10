@@ -172,6 +172,22 @@ def add_new_character(character, variety, reach, strength, life):
     This function does not give +50 gold to the team.
 
     """
+    if variety == 'elf' or 'wizard':
+        reach = 'long'
+    else:
+        reach = 'short'
+
+
+    if variety == 'dwarf':
+        strength = random.randint(10, 50)
+        life = random.randint(10, 50)
+    elif variety == 'elf':
+        strength = random.randint(15, 25)
+        life = random.randint(15, 25)
+    elif variety == 'heal' or variety == 'wizard' or variety == 'necromancer':
+        strength = random.randint(5,15)
+        life = random.randint(5, 15)
+
 
     game_db = _load_game_db()
 
@@ -189,6 +205,8 @@ def add_new_character(character, variety, reach, strength, life):
     game_db['characters'][character] = {'variety': variety, 'reach': reach, 'strength': strength, 'life': life}
 
     _dump_game_db(game_db)
+
+    return character, 'is a', variety, 'and have a', reach, 'reach', 'and have a strength of', strength, 'and have', life, 'health point'
 
 
 def get_character_variety(character):
