@@ -660,4 +660,5 @@ def create_new_player(character,variety):
     life = character_life(variety)
     strength = character_strength(variety)
     return character,variety,reach,life,strength
-create_new_player("Greudon",'necromancer')
+print(create_new_player("Thibald","dwarf"))
+yrrr
