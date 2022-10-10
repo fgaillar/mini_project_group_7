@@ -593,6 +593,30 @@ def get_creature_life(creature):
 
     return game_db['creatures'][creature]['life']
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def restart_game():
     reset_game()
 def reach_character(variety):
@@ -622,7 +646,7 @@ def character_life(variety):
         life = random.randint(15,25)
     return life
 def character_strength(variety):
-        if variety == "dwarf":
+        if variety== "dwarf":
             strength = random.randint(10, 50)
         elif variety == "healer" or 'wizard' or 'necromancer':
             strength = random.randint(5, 15)
@@ -636,5 +660,4 @@ def create_new_player(character,variety):
     life = character_life(variety)
     strength = character_strength(variety)
     return character,variety,reach,life,strength
-
 create_new_player("Greudon",'necromancer')
