@@ -38,6 +38,46 @@ def create_new_player(character, variety):
     reach = reach_character(variety)
     life = character_life(variety)
     strength = character_strength(variety)
-    return character, variety, reach, life, strength
+    gt.add_new_character(character, variety, reach, strength, life)
+    print("character is create with name: %s, variety: %s,reach: %d, strength: %d, life: %d" %(character, variety, reach, strength, life))
 
-def create_monster(monter_name,):
+def team_money(money):
+    gt.set_team_money(money)
+    return "you earned", money, "coins"
+
+def life_mob():
+    nb_mob_slayed = 0
+    mob_life = random.randint(1,10)
+    mob_life = mob_life * nb_mob_slayed
+    return mob_life
+def strength_mob():
+    mob_strength = random.randint(1, 10)
+    mob_strength = mob_strength * mob_strength
+    return mob_strength
+def reach_mob():
+    mob_reach = random.randint(0, 1)
+    if mob_reach == 0:
+        mob_reach = 'short'
+    else:
+        mob_reach = 'long'
+    return mob_reach
+def nb_mob_slayed():
+    mob_slayed = gt.get_nb_defeated()
+def creature_name():
+    mob_name = gt.get_random_creature_name()
+
+def create_new_creature():
+    creature = ""
+    reach = ""
+    life = 0
+    strength = 0
+    creature = creature_name()
+    reach = reach_mob()
+    life = life_mob()
+    strength = strength_mob()
+    gt.add_creature(creature, reach, strength, life)
+    print("creature:%s, reach:%s, strength:%d, life:%d" % (creature, reach, strength, life))
+
+
+
+create_new_creature()
