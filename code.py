@@ -79,3 +79,10 @@ def create_new_creature():
     print('the creature %s has appeared! it has %s reach, %d life, %d strength' % (creature, reach, life, strength))
 
 create_new_creature()
+
+def reset():
+    gt.reset_game()
+
+create_new_player('florian', 'necromancer')
+
+reset()
