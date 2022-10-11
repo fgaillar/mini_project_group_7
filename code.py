@@ -67,17 +67,15 @@ def creature_name():
     mob_name = gt.get_random_creature_name()
 
 def create_new_creature():
-    creature = ""
-    reach = ""
-    life = 0
-    strength = 0
-    creature = creature_name()
-    reach = reach_mob()
-    life = life_mob()
-    strength = strength_mob()
+    creature = gt.get_random_creature_name()
+    randreach = random.randint(1, 2)
+    if randreach == 1:
+        reach = "short"
+    else:
+        reach = "long"
+    life = (random.randint(1, 10))*(1 + gt.get_nb_defeated())
+    strength = (random.randint(1, 10))*(1 + gt.get_nb_defeated())
     gt.add_creature(creature, reach, strength, life)
-    print("creature:%s, reach:%s, strength:%d, life:%d" % (creature, reach, strength, life))
-
-
+    print('the creature %s has appeared! it has %s reach, %d life, %d strength' % (creature, reach, life, strength))
 
 create_new_creature()
