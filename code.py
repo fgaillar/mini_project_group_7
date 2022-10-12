@@ -72,7 +72,7 @@ def fight(character, creature):
                             print('The character %s has been hurt by %d from %s, now he has %d HP.' % (character, gt.get_creature_strength(creature), creature, gt.get_character_life(character)))
                         elif gt.get_creature_strength(creature) >= gt.get_character_life(character):
                             gt.set_character_life(character, 0)
-                            print('%s character have died')
+                            print('%s character have died' % (character))
                         print('The creature %s is now dead by taking %d damage from %s' % (creature, gt.get_character_strength(character), character))
                         gt.set_team_money(gt.get_team_money() + 50)
                         print('You earn 50 coins, current balance: %d' % (gt.get_team_money()))
