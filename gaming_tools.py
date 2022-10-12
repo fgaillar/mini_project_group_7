@@ -588,28 +588,3 @@ def get_creature_life(creature):
         raise ValueError('creature %s does not exist' % creature)
 
     return game_db['creatures'][creature]['life']
-def remove_characater(character):
-    """Removes a character from the game.
-
-    Parameters
-    -------
-    character: character name (str)
-
-    Raises
-    ------
-    ValueError: if the character does not exist
-
-    Notes
-    -----
-    After its removal, the character cannot be used anymore and is "lost".
-
-    """
-
-    game_db = _load_game_db()
-
-    if not character_exists(character):
-        raise ValueError('character %s does not exists' % character)
-
-    del game_db['character'][character]
-
-    _dump_game_db(game_db)
