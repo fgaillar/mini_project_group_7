@@ -53,7 +53,7 @@ def create_new_creature():
     life = (random.randint(1, 10))*(1 + gt.get_nb_defeated())
     strength = (random.randint(1, 10))*(1 + gt.get_nb_defeated())
     gt.add_creature(creature, reach, strength, life)
-    print('the creature %s has appeared! it has %s reach, %d life, %d strength' % (creature, reach, strength, life))
+    print('the creature %s has appeared! it has %s reach, %d life, %d strength' % (creature, reach, life, strength))
 def fight(character, creature):
     if gt.get_character_life(character) > 0:
         if (gt.get_character_reach(character) == 'long') or (gt.get_character_reach(character) == 'short' and gt.get_creature_reach(creature) == 'short'):
@@ -90,3 +90,5 @@ def fight(character, creature):
 def restart():
     gt.reset_game()
     gt.set_team_money(50)
+
+restart()
