@@ -39,12 +39,10 @@ def create_new_player(character, variety):
     life = character_life(variety)
     strength = character_strength(variety)
     gt.add_new_character(character, variety, reach, strength, life)
-    print("character is create with name: %s, variety: %s,reach: %d, strength: %d, life: %d" %(character, variety, reach, strength, life))
-
-def team_money(money):
-    gt.set_team_money(money)
-    return "you earned", money, "coins"
-
+    print("The character %s appeared! a hero %s with %s reach, %d strength and %d life " % (character, variety, reach, strength, life))
+def team_money():
+    money = gt.get_team_money()
+    print('Team actualy have %d money' % (money))
 def create_new_creature():
     creature = gt.get_random_creature_name()
     randreach = random.randint(1, 2)
@@ -56,18 +54,42 @@ def create_new_creature():
     strength = (random.randint(1, 10))*(1 + gt.get_nb_defeated())
     gt.add_creature(creature, reach, strength, life)
     print('the creature %s has appeared! it has %s reach, %d life, %d strength' % (creature, reach, life, strength))
-def attack(character, creature):
-    if gt.get_character_strength(character) >= gt.get_creature_life(creature):
-        ...
-    elif gt.get_character_strength(character) < gt.get_creature_life(creature):
-        ...
-    elif gt.get_creature_strength(creature) >= gt.get_character_life(character):
-        ...
-    elif gt.get_creature_strength(creature) < gt.get_character_life(character):
-        ...
+def fight(character, creature):
+    if (gt.get_character_reach(character) == 'long' ) or (gt.get_character_reach(character) == 'short' and gt.get_creature_reach(creature) == 'short'):
+        if gt.creature_exists(creature):
+            if gt.get_character_life(character) > 0:
+                if gt.get_character_strength(character) < gt.get_creature_life(creature):
+                    gt.set_creature_life(creature, (gt.get_creature_life(creature) - gt.get_character_strength(character)))
+                    if gt.get_creature_strength(creature) < gt.get_character_life(character):
+                        gt.set_character_life(character, (gt.get_character_life(character) - gt.get_creature_strength(creature)))
+                        print('The character %s has been hurt by %d from %s, now he have %d HP.' % (character, gt.get_creature_strength(creature), creature, gt.get_character_life(character)))
+                    if gt.get_character_strength(creature) >= gt.get_character_life(character):
+                        gt.set_character_life(character, 0)
+                        print('%s character have died')
+                if gt.get_character_strength(character) >= gt.get_creature_life(creature):
 
+                    if gt.get_creature_strength(creature) < gt.get_character_life(character):
+                        gt.set_character_life(character, (gt.get_character_life(character) - gt.get_creature_strength(creature)))
+                        print('The character %s has been hurt by %d from %s, now he have %d HP.' % (character, gt.get_creature_strength(creature), creature, gt.get_character_life(character)))
+
+                    if gt.get_character_strength(creature) >= gt.get_character_life(character):
+                        gt.set_character_life(character, 0)
+                        print('%s character have died')
+
+                    print('The creature %s is now dead by taking %d damage from %s' % (creature, gt.get_character_strength(character), character))
+                    print('You earn 50 coins, current balance: %d' % (team_money()))
+            else:
+                print('This character is dead')
+        else:
+            print('This creature doesn\'t exist')
+    else:
+        print('You don\'t have the good reach')
+
+
+print('there is impossible to attack beacause the reach of %s is %s and the reach of %s is %s.' % (character, gt.get_character_reach(character), creature, gt.get_creature_reach(creature)))
 
 def restart():
     gt.reset_game()
 
+fight('a', 'Python#886')
 
