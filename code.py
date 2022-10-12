@@ -19,7 +19,7 @@ def create_new_player(character, variety):
     print("The character %s appeared! a hero %s with %s reach, %d strength and %d life " % (character, variety, reach, strength, life))
 def team_money():
     money = gt.get_team_money()
-    print('Team actualy have %d money' % (money))
+    print('Team has right now %d coins' % (money))
 def create_new_creature():
     creature = gt.get_random_creature_name()
     randreach = random.randint(1, 2)
@@ -56,6 +56,15 @@ def fight(character, creature):
                         gt.remove_creature(creature)
                         gt.set_nb_defeated((gt.get_nb_defeated() + 1))
                         print('Creature killed: %d' % (gt.get_nb_defeated()))
+        elif (gt.get_character_reach(character) == "short") and (gt.get_creature_reach(creature) == "long"):
+            if gt.creature_exists(creature):
+                if gt.get_creature_strength(creature) < gt.get_character_life(character):
+                    gt.set_character_life(character, (gt.get_character_life(character) - gt.get_creature_strength(creature)))
+                    print('The character %s has been hurt by %d from %s, now he has %d HP.' % (character, gt.get_creature_strength(creature), creature, gt.get_character_life(character)))
+                elif gt.get_creature_strength(creature) >= gt.get_character_life(character):
+                    gt.set_character_life(character, 0)
+                    print('%s character have died' % (character))
+
             else:
                 print('This creature doesn\'t exist')
         else:
@@ -64,19 +73,22 @@ def fight(character, creature):
         print("This character is dead")
 def divide_hp(character1, creature):
     if gt.character_exists(character1):
-        if gt.get_character_variety(character1) == "wizard":
-            if gt.get_team_money() >= 20:
-                if gt.creature_exists(creature):
-                    gt.set_creature_life(creature, (gt.get_creature_life(creature)//2))
-                    gt.set_team_money((gt.get_team_money() - 20))
-                    print('%s has now %d HP' % (creature, gt.get_creature_life(creature)))
-                    print('Current balance is at: %d' % (gt.get_team_money()))
+        if gt.get_character_life(character1)>0:
+            if gt.get_character_variety(character1) == "wizard":
+                if gt.get_team_money() >= 20:
+                    if gt.creature_exists(creature):
+                        gt.set_creature_life(creature, (gt.get_creature_life(creature)//2))
+                        gt.set_team_money((gt.get_team_money() - 20))
+                        print('%s has now %d HP' % (creature, gt.get_creature_life(creature)))
+                        print('Current balance is at: %d' % (gt.get_team_money()))
+                    else:
+                        print("%s doesn\'t exist" % (creature))
                 else:
-                    print("%s doesn\'t exist" %(creature))
+                    print("Your team is too poor, try again when you have earned more money!")
             else:
-                print("Your team is too poor, try again when you have earned more money!")
+                print('%s hasn\'t such power.' % (character1))
         else:
-            print('%s hasn\'t such power.' %(character1))
+            print('%s is dead.' % (character1))
     else:
         print("%s doesn\'t exist." % (character1))
 def heal(character1, character2):
@@ -96,7 +108,6 @@ def heal(character1, character2):
             print('%s hasn\'t such power.' %(character1))
     else:
         print("%s doesn\'t exist." %(character1))
-
 def revive(character1,character2):
     if gt.character_exists(character1):
         if gt.get_character_variety(character1) == "necromancer":
@@ -105,7 +116,7 @@ def revive(character1,character2):
                     if gt.get_character_life(character2) == 0:
                         gt.set_character_life(character2, (gt.get_character_life(character2) + 10))
                         print("%s come back from the death and has now: %d hp" % (character2, gt.get_character_life(character2)))
-                        print("Current balance is at: %d" % (gt.get_team_money()))
+                        print("Current balance is at: %d coins" % (gt.get_team_money()))
                     else:
                         print("%s is still alive" % (character2))
                 else:
@@ -116,9 +127,25 @@ def revive(character1,character2):
             print('%s hasn\'t such power' %(character1))
     else:
         print("%s doesn\'t exist" %(character1))
-
+def evolve(character):
+    if gt.get_character_life(character) > 0:
+        if gt.get_team_money() >= 4:
+            level_up_strength = random.randint(0, 3)
+            level_up_life = random.randint(0, 1)
+            gt.set_team_money(gt.get_team_money() - 4)
+            print("current balance: %d" % (gt.get_team_money()))
+            if level_up_strength == 0:
+                gt.set_character_strength((character), gt.get_character_strength(character) + 4)
+                print('%s has level up is strength by 4 now he has %d strength' % (character, gt.get_character_strength(character)))
+            if level_up_life == 0:
+                gt.set_character_life((character), gt.get_character_life(character) + 2)
+                print('%s has level up is life by 2 now he has %d life' % (character, gt.get_character_life(character)))
+            else:
+                print("%s didn\'t manage to level_up this time! Maybe next time..." %(character))
+        else:
+            print("Your team is too poor, try again when you have earned more money!")
+    else:
+        print('This character is not alive.')
 def restart():
     gt.reset_game()
     gt.set_team_money(50)
-
-restart()
