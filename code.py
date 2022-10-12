@@ -90,4 +90,3 @@ def fight(character, creature):
 def restart():
     gt.reset_game()
     gt.set_team_money(50)
-
