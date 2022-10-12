@@ -1,43 +1,20 @@
 import gaming_tools as gt
 import random
-def reach_character(variety):
-    """
-    calcul the reach of the variety of the character.
 
-    Parametres:
-    ---------
-    reach: reach of the character (int)
-
-    Raises
-    ------
-    ValueError: if the character does not exist
-
-    """
-    if variety == "elf" or variety == "wizard":
-        reach = 'long'
-    else:
-        reach = 'short'
-    return reach
-def character_life(variety):
-    if variety == "dwarf":
-        life = random.randint(10,50)
-    elif variety == "healer" or 'wizard' or 'necromancer':
-        life = random.randint(5,15)
-    elif variety == "elf":
-        life = random.randint(15,25)
-    return life
-def character_strength(variety):
-        if variety== "dwarf":
-            strength = random.randint(10, 50)
-        elif variety == "healer" or 'wizard' or 'necromancer':
-            strength = random.randint(5, 15)
-        elif variety == "elf":
-            strength = random.randint(15, 25)
-        return strength
 def create_new_player(character, variety):
-    reach = reach_character(variety)
-    life = character_life(variety)
-    strength = character_strength(variety)
+    if variety == "wizard" or variety == "elf":
+        reach = "long"
+    elif variety == "dwarf" or variety == "necromancer" or variety == "healer":
+        reach = "short"
+    if variety == "dwarf":
+        strength = random.randint(10, 50)
+        life = random.randint(10, 50)
+    elif variety == "elf":
+        strength = random.randint(15, 25)
+        life = random.randint(15, 25)
+    elif variety == "necromancer" or "wizard" or "healer":
+        life = random.randint(5, 15)
+        strength = random.randint(5, 15)
     gt.add_new_character(character, variety, reach, strength, life)
     print("The character %s appeared! a hero %s with %s reach, %d strength and %d life " % (character, variety, reach, strength, life))
 def team_money():
@@ -85,7 +62,60 @@ def fight(character, creature):
             print('Character doesn\'t have the reach')
     else:
         print("This character is dead")
+def divide_hp(character1, creature):
+    if gt.character_exists(character1):
+        if gt.get_character_variety(character1) == "wizard":
+            if gt.get_team_money() >= 20:
+                if gt.creature_exists(creature):
+                    gt.set_creature_life(creature, (gt.get_creature_life(creature)//2))
+                    gt.set_team_money((gt.get_team_money() - 20))
+                    print('%s has now %d HP' % (creature, gt.get_creature_life(creature)))
+                    print('Current balance is at: %d' % (gt.get_team_money()))
+                else:
+                    print("%s doesn\'t exist" %(creature))
+            else:
+                print("Your team is too poor, try again when you have earned more money!")
+        else:
+            print('%s hasn\'t such power.' %(character1))
+    else:
+        print("%s doesn\'t exist." %(character1))
+def heal(character1, character2):
+    if gt.character_exists(character1):
+        if gt.get_character_variety(character1) == "healer":
+            if gt.get_team_money() >= 5:
+                if gt.character_exists(character2):
+                    gt.set_character_life(character2, (gt.get_character_life(character2) + 10))
+                    gt.set_team_money((gt.get_team_money()-5))
+                    print("%s has recover 10 hp and is now at : %d life" % (character2, gt.get_character_life(character2)))
+                    print("Current balance is at: %d" % (gt.get_team_money()))
+                else:
+                    print('%s doesn\'t exist' %(character2))
+            else:
+                print("Your team is too poor, try again when you have earned more money!")
+        else:
+            print('%s hasn\'t such power.' %(character1))
+    else:
+        print("%s doesn\'t exist." %(character1))
 
+def revive(character1,character2):
+    if gt.character_exists(character1):
+        if gt.get_character_variety(character1) == "necromancer":
+            if gt.get_team_money() >= 75:
+                if gt.character_exists(character2):
+                    if gt.get_character_life(character2) == 0:
+                        gt.set_character_life(character2, (gt.get_character_life(character2) + 10))
+                        print("%s come back from the death and has now: %d hp" % (character2, gt.get_character_life(character2)))
+                        print("Current balance is at: %d" % (gt.get_team_money()))
+                    else:
+                        print("%s is still alive" % (character2))
+                else:
+                    print('%s doesn\'t exist' % (character2))
+            else:
+                print("Your team is too poor, try again when you have earned more money")
+        else:
+            print('%s hasn\'t such power' %(character1))
+    else:
+        print("%s doesn\'t exist" %(character1))
 
 def restart():
     gt.reset_game()
