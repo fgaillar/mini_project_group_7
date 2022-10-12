@@ -69,5 +69,5 @@ def attack(character, creature):
 
 def restart():
     gt.reset_game()
-attack('merci', 'Python#611')
+
 
