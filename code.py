@@ -78,7 +78,7 @@ def divide_hp(character1, creature):
         else:
             print('%s hasn\'t such power.' %(character1))
     else:
-        print("%s doesn\'t exist." %(character1))
+        print("%s doesn\'t exist." % (character1))
 def heal(character1, character2):
     if gt.character_exists(character1):
         if gt.get_character_variety(character1) == "healer":
