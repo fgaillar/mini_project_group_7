@@ -2,6 +2,12 @@ import gaming_tools as gt
 import random
 
 def create_new_player(character, variety):
+    """Create a new player.
+    Parameters
+    -------
+    character: name of the character (str)
+    character: name of the variety of the character (str)
+    """
     if variety == "wizard" or variety == "elf":
         reach = "long"
     elif variety == "dwarf" or variety == "necromancer" or variety == "healer":
@@ -18,9 +24,11 @@ def create_new_player(character, variety):
     gt.add_new_character(character, variety, reach, strength, life)
     print("The character %s appeared! a hero %s with %s reach, %d strength and %d life " % (character, variety, reach, strength, life))
 def team_money():
+    """Show the current team money."""
     money = gt.get_team_money()
     print('Team has right now %d coins' % (money))
 def create_new_creature():
+    """ Add a new creature to the game."""
     creature = gt.get_random_creature_name()
     randreach = random.randint(1, 2)
     if randreach == 1:
@@ -32,6 +40,12 @@ def create_new_creature():
     gt.add_creature(creature, reach, strength, life)
     print('the creature %s has appeared! it has %s reach, %d life, %d strength' % (creature, reach, life, strength))
 def fight(character, creature):
+    """ Allows a character to attack a creature.
+    Parameters
+    ----------
+    character: name of the character (str)
+    creature: name of the creature (str)
+    """
     if gt.get_character_life(character) > 0:
         if (gt.get_character_reach(character) == 'long') or (gt.get_character_reach(character) == 'short' and gt.get_creature_reach(creature) == 'short'):
             if gt.creature_exists(creature):
@@ -72,6 +86,12 @@ def fight(character, creature):
     else:
         print("This character is dead")
 def divide_hp(character1, creature):
+    """Allows the wizard to use his power to divide in half the creature's life.
+    Parameters
+    ----------
+    character1: name of the character (str)
+    creature: name of the creature (str)
+    """
     if gt.character_exists(character1):
         if gt.get_character_life(character1)>0:
             if gt.get_character_variety(character1) == "wizard":
@@ -92,6 +112,12 @@ def divide_hp(character1, creature):
     else:
         print("%s doesn\'t exist." % (character1))
 def heal(character1, character2):
+    """Allows the healer to heal the character life.
+    Parameters
+    ----------
+    character1: name of the character (str)
+    character2: name of the character (str)
+    """
     if gt.character_exists(character1):
         if gt.get_character_variety(character1) == "healer":
             if gt.get_team_money() >= 5:
@@ -109,6 +135,12 @@ def heal(character1, character2):
     else:
         print("%s doesn\'t exist." %(character1))
 def revive(character1,character2):
+    """Allows the necromancer to use his power to revive a character.
+    Parameters
+    ----------
+    character1: name of the character (str)
+    character2: name of the character (str)
+    """
     if gt.character_exists(character1):
         if gt.get_character_variety(character1) == "necromancer":
             if gt.get_team_money() >= 75:
@@ -128,6 +160,11 @@ def revive(character1,character2):
     else:
         print("%s doesn\'t exist" %(character1))
 def evolve(character):
+    """Allows a character to possibly gain strength and/or life.
+    Parameters
+    ----------
+    character: name of the character (str)
+    """
     if gt.get_character_life(character) > 0:
         if gt.get_team_money() >= 4:
             level_up_strength = random.randint(0, 3)
@@ -147,5 +184,6 @@ def evolve(character):
     else:
         print('This character is not alive.')
 def restart():
+    """Restart the game."""
     gt.reset_game()
     gt.set_team_money(50)
